@@ -1,5 +1,6 @@
 # stats107_final
 
+
 ##How do different sleep disorders (Insomnia vs. Sleep Apnea) differ in sleep quality and stress level?
 
 1. Variables:
@@ -12,7 +13,9 @@ Stress Level (Scale: 1-10): A subjective rating of the stress level experienced 
 
 2. Hypotheses:
 
+
   a. Null Hypothesis (H₀₁)
+
 
     - Statement: There is no significant difference in stress levels between individuals with Sleep Apnea and Insomnia.
 
