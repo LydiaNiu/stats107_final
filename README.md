@@ -12,11 +12,11 @@ Stress Level (Scale: 1-10): A subjective rating of the stress level experienced 
 
     a. Null Hypothesis (H₀₁)
 
-        Statement: There is no significant difference in stress levels between individuals with Sleep Apnea and Insomnia.
+     - Statement: There is no significant difference in stress levels between individuals with Sleep Apnea and Insomnia.
 
-        Test: Test of difference of two means
+     - Test: Test of difference of two means
 
-        Since the two variables are continuous and categorical, where stress level is measured on a scale (1-10) and sleeping disorders are categorical (Sleep Apnea vs. Insomnia), a t-test would be appropriate.
+     - Since the two variables are continuous and categorical, where stress level is measured on a scale (1-10) and sleeping disorders are categorical (Sleep Apnea vs. Insomnia), a t-test would be appropriate.
 
     b. Null Hypothesis (H₀₂)
 
