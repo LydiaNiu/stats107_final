@@ -1,0 +1,18 @@
+---
+title: "12_DataVisualization.rmd"
+output: html_document
+date: "2025-03-13"
+---
+```{r}
+source("00_requirements.R")
+df <- read.csv("cleaned_sleep_health_data.csv")
+# 1. the quality of sleeping with the ppl with sleep apnea vs the quality of sleeping with the ppl with insomnia 
+
+# 2. the stress level with the ppl with sleep apnea vs thestress level with the ppl with insomnia 
+# 3. the quality of sleeping with the ppl without sleeping disorder vs the quality of sleeping with the ppl with insomnia 
+# 4. the quality of sleeping with the ppl without sleeping disorder vs the quality of sleeping with the ppl with sleep apnea
+# 5. the stress level with the ppl without sleeping disorder vs the stress levelwith the ppl with insomnia 
+# 6. the stress level with the ppl without sleeping disorder vs the stress levelwith the ppl with sleep apnea. 
+```
+
+

@@ -14,9 +14,10 @@ Stress Level (Scale: 1-10): A subjective rating of the stress level experienced 
 2. Hypotheses:
 
 
-a. Null Hypothesis (H₀₁)
+  a. Null Hypothesis (H₀₁)
 
-Statement: There is no significant difference in stress levels between individuals with Sleep Apnea and Insomnia.
+
+    - Statement: There is no significant difference in stress levels between individuals with Sleep Apnea and Insomnia.
 
 Test: Test of difference of two means
 
