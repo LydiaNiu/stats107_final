@@ -1,18 +1,18 @@
-# stats107_final
+## stats107_final
 
 
 ##How do different sleep disorders (Insomnia vs. Sleep Apnea) differ in sleep quality and stress level?
 
-1. Variables:
+# 1. Variables:
 
-Sleep Disorder: The presence or absence of a sleep disorder in the person (None, Insomnia, Sleep Apnea).
+  - Sleep Disorder: The presence or absence of a sleep disorder in the person (None, Insomnia, Sleep Apnea).
 
-Quality of Sleep (Scale: 1-10): A subjective rating of the quality of sleep, ranging from 1 to 10.
+  - Quality of Sleep (Scale: 1-10): A subjective rating of the quality of sleep, ranging from 1 to 10.
 
-Stress Level (Scale: 1-10): A subjective rating of the stress level experienced by the person, ranging from 1 to 10.
+  - Stress Level (Scale: 1-10): A subjective rating of the stress level experienced by the person, ranging from 1 to 10.
 
 
-2. Hypotheses:
+# 2. Hypotheses:
 All the following tests will use t-test to compare the differences of the two means.
 
 
