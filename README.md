@@ -11,34 +11,29 @@ Quality of Sleep (Scale: 1-10): A subjective rating of the quality of sleep, ran
 Stress Level (Scale: 1-10): A subjective rating of the stress level experienced by the person, ranging from 1 to 10.
 
 2. Hypotheses:
+All the following tests will use t-test to compare the differences of the two means.
 
-  a. Null Hypothesis (H₀₁)
 
-    - Statement: There is no significant difference in stress levels between individuals with Sleep Apnea and Insomnia.
+  1) Null Hypothesis (H₀₁) : sleep quality of sleep apnea vs sleep quality of insomia
+  
+   - There is no significant difference in sleep quality between people with Sleep Apnea and those with Insomnia.
 
-Test: Test of difference of two means
+  2) Null Hypothesis (H₀₂) : stress level of sleep apnea vs stress level of insomia
 
-Since the two variables are continuous and categorical, where stress level is measured on a scale (1-10) and sleeping disorders are categorical (Sleep Apnea vs. Insomnia), a t-test would be appropriate.
+   - There is no significant difference in stress levels between people with Sleep Apnea and those with Insomnia.
 
-b. Null Hypothesis (H₀₂)
+  3) Null Hypothesis (H₀₃) : 
 
-Statement: There is no significant difference in sleep quality between individuals with Sleep Apnea and Insomnia.
+   - There is no significant difference in sleep quality between people with No Sleep Disorder and those with Insomnia.
 
-Test: Test of difference of two means
+  4) Null Hypothesis (H₀₄) : 
 
-Similar to the first null hypothesis.
+   - There is no significant difference in sleep quality between people with No Sleep Disorder and those with Sleep Apnea.
 
-c. Null Hypothesis (H₀₃)
-
-Statement: Stress level and sleep quality are not significantly correlated in individuals with Sleep Apnea and Insomnia.
-
-Test: Pearson Correlation Coefficient (r)
-
-Since both variables (stress level and sleep quality) are continuous, Pearson’s correlation test will be used to measure the linear relationship between them.
-
-d. Null Hypothesis (H₀₄)
-
-Statement: Comparison of individuals with sleep disorders to those without disorders.
-
-Analysis: The study examines individuals with insomnia to determine if there is a significant change in both stress level and sleep quality compared to those without sleep disorders.
-
+  5) Null Hypothesis (H₀₅) :
+  
+   - There is no significant difference in stress levels between people with No Sleep Disorder and those with Insomnia.
+  
+  6) Null Hypothesis (H₀₆) :
+  
+   - There is no significant difference in stress levels between people with No Sleep Disorder and those with Sleep Apnea.
