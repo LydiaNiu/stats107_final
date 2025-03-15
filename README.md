@@ -1,5 +1,6 @@
 # stats107_final
 
+
 ##How do different sleep disorders (Insomnia vs. Sleep Apnea) differ in sleep quality and stress level?
 
 1. Variables:
@@ -11,6 +12,7 @@ Quality of Sleep (Scale: 1-10): A subjective rating of the quality of sleep, ran
 Stress Level (Scale: 1-10): A subjective rating of the stress level experienced by the person, ranging from 1 to 10.
 
 2. Hypotheses:
+
 
 a. Null Hypothesis (H₀₁)
 
