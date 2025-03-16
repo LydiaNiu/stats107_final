@@ -1,7 +1,4 @@
-## stats107_final
-
-
-##How do different sleep disorders (Insomnia vs. Sleep Apnea) differ in sleep quality and stress level?
+### How do different sleep disorders (Insomnia vs. Sleep Apnea) differ in sleep quality and stress level?
 
 # 1. Variables:
 
