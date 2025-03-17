@@ -15,14 +15,14 @@ sum(df_uncleaned == "", na.rm = TRUE)  # answer: 0
 sum(is.na(df_uncleaned))  # answer: 0
 
 # reduce variables that won't be tested out
-df <- data.frame(df_uncleaned$Person.ID, df_uncleaned$Quality.of.Sleep, df_uncleaned$Stress.Level, df_uncleaned$Sleep.Disorder)
+df <- data.frame(df_uncleaned$Quality.of.Sleep, df_uncleaned$Stress.Level, df_uncleaned$Sleep.Disorder)
 # convert the chr variables into factor
 df <- to_factors(df)
 # rename the variable
-colnames(df) <- c("id", "sleep_quality", "stress", "disorder")
+colnames(df) <- c("sleep_quality", "stress", "disorder")
 summary(df)
 
 # save the updated csv file into a new csv file
 write_csv(df, "cleaned_sleep_health_data.csv")
-
+df
 ```

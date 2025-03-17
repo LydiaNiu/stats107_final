@@ -1,29 +1,126 @@
 ---
 title: "FinalReport_Niu_Lydia.Rmd"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 date: "2025-03-15"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+source("00_requirements.R")
+source("01_func_DataCleaning.R")
+source("02_func_dVisual_PlotDensity.R")
+source("03_func_dVisual_BoxPlot.R")
+source("04_func_dVisual_BarChart.R")
+df <- read.csv("cleaned_sleep_health_data.csv")
 ```
 
-## R Markdown
+# I am the title
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## ABSTRACT
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## INTRODUCTION
 
-```{r cars}
-summary(cars)
+## DATA
+
+### variables: 
+- Sleep Disorder: The presence or absence of a sleep disorder in the person (None, Insomnia, Sleep Apnea).
+- Quality of Sleep (Scale: 1-10): A subjective rating of the quality of sleep, ranging from 1 to 10.
+- Stress Level (Scale: 1-10): A subjective rating of the stress level experienced by the person, ranging from 1 to 10.
+
+## VISUALIZATION
+This project uses a **t-test** because it is a statistical method specifically designed to **compare the means of two groups** and determine whether the observed differences are statistically significant. Since our goal is to analyze whether **sleep quality and stress levels differ between individuals with and without sleep disorders (None, Sleep Apnea, Insomnia)**, the t-test is an appropriate choice. It allows us to test the null hypothesis that the means of two groups are equal, while accounting for variability in the data. By using the **p-value and confidence intervals**, we can assess whether the differences we observe are due to chance or represent a meaningful pattern in sleep health.
+
+### Density plots for 6 tests:
+\newline
+```{r density_plots_page1, fig.width=25, fig.height=30, echo=FALSE, warning=FALSE, message=FALSE}
+# 1. sleep quality of sleep apnea vs sleep quality of insomnia
+t_test_result1 <- t.test(df$sleep_quality[df$disorder == "Sleep Apnea"],
+       df$sleep_quality[df$disorder == "Insomnia"])
+dplot1 <- plot_density(df,"sleep_quality", "Sleep Apnea", "Insomnia", "Figure1: Sleep Quality: Sleep Apnea vs. Insomnia")
+
+# 2. the stress level with the ppl with sleep apnea vs thestress level with the ppl with insomnia
+t_test_result2 <- t.test(df$stress[df$disorder == "Sleep Apnea"],
+       df$stress[df$disorder == "Insomnia"])
+dplot2 <- plot_density(df, "stress", "Sleep Apnea", "Insomnia", "Figure2: Stress Level: Sleep Apnea vs. Insomnia")
+
+# 3. the quality of sleeping with the ppl without sleeping disorder vs the quality of sleeping with the ppl with insomnia 
+t_test_result3 <- t.test(df$sleep_quality[df$disorder == "None"],
+       df$sleep_quality[df$disorder == "Insomnia"])
+dplot3 <- plot_density(df, "sleep_quality", "None", "Insomnia", "Figure3: Sleep Quality: No Disorder vs. Insomnia")
+
+grid.arrange(dplot1, dplot2, dplot3, ncol = 1, nrow = 3, heights = c(1, 1, 1))
 ```
 
-## Including Plots
+```{r density_plots_page2, fig.width=25, fig.height=30, echo=FALSE, warning=FALSE, message=FALSE}
+# 4. the quality of sleeping with the ppl without sleeping disorder vs the quality of sleeping with the ppl with sleep apnea
+t_test_result4 <- t.test(df$sleep_quality[df$disorder == "None"],
+       df$sleep_quality[df$disorder == "Sleep Apnea"])
+dplot4 <- plot_density(df, "sleep_quality", "None", "Sleep Apnea", "Figure4: Sleep Quality: No Disorder vs. Sleep Apnea")
 
-You can also embed plots, for example:
+# 5. the stress level with the ppl without sleeping disorder vs the stress levelwith the ppl with insomnia 
+t_test_result5 <- t.test(df$stress[df$disorder == "None"],
+       df$stress[df$disorder == "Insomnia"])
+dplot5 <- plot_density(df, "stress", "None", "Insomnia", "Figure5: Stress Level: No Disorder vs. Insomnia")
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+# 6. the stress level with the ppl without sleeping disorder vs the stress levelwith the ppl with sleep apnea. 
+t_test_result6 <- t.test(df$stress[df$disorder == "None"],
+       df$stress[df$disorder == "Sleep Apnea"])
+dplot6 <- plot_density(df, "stress", "None", "Sleep Apnea", "Figure6: Stress Level: No Disorder vs. Sleep Apnea")
+
+grid.arrange(dplot4, dplot5, dplot6, ncol = 1, nrow = 3)
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### Box plots for the 6 testsd
+
+```{r density_plots_page3, fig.width=18, fig.height=25, echo=FALSE, warning=FALSE, message=FALSE}  
+bplot1 <- plot_boxplot(df, "sleep_quality", "disorder", "Sleep Apnea", "Insomnia", "Figure7: Sleep Quality: Sleep Apnea vs. Insomnia")
+bplot2 <- plot_boxplot(df, "stress", "disorder", "Sleep Apnea", "Insomnia", "Figure8: Stress Level: Sleep Apnea vs. Insomnia")
+bplot3 <- plot_boxplot(df, "sleep_quality", "disorder", "None", "Insomnia", "Figure9: Sleep Quality: No Disorder vs. Insomnia")
+
+grid.arrange(bplot1, bplot2, bplot3, ncol = 1, nrow = 3)
+```
+
+```{r density_plots_page4, fig.width=18, fig.height=25, echo=FALSE, warning=FALSE, message=FALSE}
+bplot4 <- plot_boxplot(df, "sleep_quality", "disorder", "None", "Sleep Apnea", "Figure10: Sleep Quality: No Disorder vs. Sleep Apnea")
+bplot5 <- plot_boxplot(df, "stress", "disorder", "None", "Insomnia", "Figure11: Stress Level: No Disorder vs. Insomnia")
+bplot6 <- plot_boxplot(df, "stress", "disorder", "None", "Sleep Apnea", "Figure12: Stress Level: No Disorder vs. Sleep Apnea")
+grid.arrange(bplot4, bplot5, bplot6, ncol = 1, nrow = 3)
+```
+
+
+### Four-quadrant distribution chart
+
+```{r density_plots_page5, fig.width= 25, fig.height=25, echo=FALSE, warning=FALSE, message=FALSE}
+# ggplot(df, aes(x = stress, y = sleep_quality, shape = disorder, color = disorder)) +
+#   geom_point(size = 3, alpha = 0.7) +  # Adjust point size & transparency
+#   geom_hline(yintercept = median(df$sleep_quality, na.rm = TRUE), linetype = "dashed", color = "black") +  # Median line for Quality
+#   geom_vline(xintercept = median(df$stress, na.rm = TRUE), linetype = "dashed", color = "black") +  # Median line for Stress
+#   labs(title = "Four-Quadrant Distribution of Stress & Sleep Quality",
+#        x = "Stress Level",
+#        y = "Sleep Quality",
+#        shape = "Disorder",
+#        color = "Disorder") +
+#   scale_shape_manual(values = c(16, 17, 15)) +  # Different shapes for each disorder
+#   theme_minimal()
+```
+
+```{r, echo = FALSE}
+tinytex::reinstall_tinytex(repository = "illinois")
+
+```
+
+## ANALYSIS
+```{r, echo = FALSE}
+
+```
+# Analyzing the Four-quadrant Distribution Chart
+
+Clustering patterns:
+Sleep Apnea (square) tends to be in the upper left quadrant, meaning higher sleep quality and lower stress.
+Insomnia (solid circle) tends to be in the lower right quadrant, meaning higher stress and lower sleep quality.
+Normal individuals (triangle) are scattered but mostly near the center.
+
+## CONCLUSION

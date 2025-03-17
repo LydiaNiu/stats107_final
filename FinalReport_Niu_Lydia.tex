@@ -1,0 +1,178 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={FinalReport\_Niu\_Lydia.Rmd},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{FinalReport\_Niu\_Lydia.Rmd}
+\author{}
+\date{\vspace{-2.5em}2025-03-15}
+
+\begin{document}
+\maketitle
+
+\section{I am the title}\label{i-am-the-title}
+
+\subsection{ABSTRACT}\label{abstract}
+
+\subsection{INTRODUCTION}\label{introduction}
+
+\subsection{DATA}\label{data}
+
+\subsubsection{variables:}\label{variables}
+
+\begin{itemize}
+\tightlist
+\item
+  Sleep Disorder: The presence or absence of a sleep disorder in the
+  person (None, Insomnia, Sleep Apnea).
+\item
+  Quality of Sleep (Scale: 1-10): A subjective rating of the quality of
+  sleep, ranging from 1 to 10.
+\item
+  Stress Level (Scale: 1-10): A subjective rating of the stress level
+  experienced by the person, ranging from 1 to 10.
+\end{itemize}
+
+\subsection{VISUALIZATION}\label{visualization}
+
+This project uses a \textbf{t-test} because it is a statistical method
+specifically designed to \textbf{compare the means of two groups} and
+determine whether the observed differences are statistically
+significant. Since our goal is to analyze whether \textbf{sleep quality
+and stress levels differ between individuals with and without sleep
+disorders (None, Sleep Apnea, Insomnia)}, the t-test is an appropriate
+choice. It allows us to test the null hypothesis that the means of two
+groups are equal, while accounting for variability in the data. By using
+the \textbf{p-value and confidence intervals}, we can assess whether the
+differences we observe are due to chance or represent a meaningful
+pattern in sleep health.
+
+\subsubsection{Density plots for 6
+tests:}\label{density-plots-for-6-tests}
+
+\newline
+
+\includegraphics{FinalReport_Niu_Lydia_files/figure-latex/density_plots_page1-1.pdf}
+
+\includegraphics{FinalReport_Niu_Lydia_files/figure-latex/density_plots_page2-1.pdf}
+
+\subsubsection{Box plots for the 6
+testsd}\label{box-plots-for-the-6-testsd}
+
+\includegraphics{FinalReport_Niu_Lydia_files/figure-latex/density_plots_page3-1.pdf}
+
+\includegraphics{FinalReport_Niu_Lydia_files/figure-latex/density_plots_page4-1.pdf}
+
+\subsubsection{Four-quadrant distribution
+chart}\label{four-quadrant-distribution-chart}
+
+\begin{verbatim}
+## If reinstallation fails, try install_tinytex() again. Then install the following packages:
+## 
+## tinytex::tlmgr_install(c("amscls", "amsfonts", "amsmath", "atbegshi", "atveryend", "auxhook", "babel", "bibtex", "bigintcalc", "bitset", "bookmark", "booktabs", "cm", "ctablestack", "dehyph", "dvipdfmx", "dvips", "ec", "epstopdf", "epstopdf-pkg", "etex", "etexcmds", "etoolbox", "euenc", "extractbb", "fancyvrb", "filehook", "firstaid", "float", "fontspec", "framed", "geometry", "gettitlestring", "glyphlist", "graphics", "graphics-cfg", "graphics-def", "helvetic", "hycolor", "hyperref", "hyph-utf8", "hyphen-base", "iftex", "inconsolata", "infwarerr", "intcalc", "knuth-lib", "kpathsea", "kvdefinekeys", "kvoptions", "kvsetkeys", "l3backend", "l3kernel", "l3packages", "latex", "latex-amsmath-dev", "latex-bin", "latex-fonts", "latex-tools-dev", "latexconfig", "latexmk", "letltxmacro", "lm", "lm-math", "ltxcmds", "lua-alt-getopt", "lua-uni-algos", "luahbtex", "lualatex-math", "lualibs", "luaotfload", "luatex", "luatexbase", "mdwtools", "metafont", "mfware", "modes", "natbib", "pdfescape", "pdftex", "pdftexcmds", "plain", "psnfss", "refcount", "rerunfilecheck", "scheme-infraonly", "selnolig", "stringenc", "symbol", "tex", "tex-ini-files", "texlive-scripts", "texlive-scripts-extra", "texlive.infra", "times", "tipa", "tlgpg", "tools", "unicode-data", "unicode-math", "uniquecounter", "url", "xcolor", "xetex", "xetexconfig", "xkeyval", "xunicode", "zapfding"))
+\end{verbatim}
+
+\begin{verbatim}
+## The directory /Users/user/Library/TinyTeX/texmf-local is not empty. It will be backed up to /var/folders/_2/3lrnsn7x5615sf09xw7cfcfm0000gn/T//RtmpGeK28v/file11d647e927820 and restored later.
+\end{verbatim}
+
+\begin{verbatim}
+## tlmgr install tlgpg
+\end{verbatim}
+
+\begin{verbatim}
+## tlmgr update --self
+\end{verbatim}
+
+\begin{verbatim}
+## tlmgr install tlgpg
+\end{verbatim}
+
+\begin{verbatim}
+## tlmgr --repository http://www.preining.info/tlgpg/ install tlgpg
+\end{verbatim}
+
+\begin{verbatim}
+## tlmgr option repository 'https://ctan.math.illinois.edu/systems/texlive/tlnet'
+\end{verbatim}
+
+\begin{verbatim}
+## tlmgr update --list
+\end{verbatim}
+
+\subsection{ANALYSIS}\label{analysis}
+
+\section{Analyzing the Four-quadrant Distribution
+Chart}\label{analyzing-the-four-quadrant-distribution-chart}
+
+Clustering patterns: Sleep Apnea (square) tends to be in the upper left
+quadrant, meaning higher sleep quality and lower stress. Insomnia (solid
+circle) tends to be in the lower right quadrant, meaning higher stress
+and lower sleep quality. Normal individuals (triangle) are scattered but
+mostly near the center.
+
+\subsection{CONCLUSION}\label{conclusion}
+
+\end{document}

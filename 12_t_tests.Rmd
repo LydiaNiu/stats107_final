@@ -9,20 +9,26 @@ source("02_func_dVisual_PlotDensity.R")
 df <- read.csv("cleaned_sleep_health_data.csv")
 ```
 
+
+
 ```{r}
 # 1. sleep quality of sleep apnea vs sleep quality of insomnia
 t_test_result1 <- t.test(df$sleep_quality[df$disorder == "Sleep Apnea"],
        df$sleep_quality[df$disorder == "Insomnia"])
-plot_density(df,"sleep_quality", "Sleep Apnea", "Insomnia", "Sleep Quality: Sleep Apnea vs. Insomnia")
+plot_density(df,"sleep_quality", "Sleep Apnea", "Insomnia", "Figure1: Sleep Quality: Sleep Apnea vs. Insomnia")
 t_test_result1
+# p value: 0.001583
+# means: 7.205128  6.532468 
 ```
 
 ```{r}
 # 2. the stress level with the ppl with sleep apnea vs thestress level with the ppl with insomnia \
 t_test_result2 <- t.test(df$stress[df$disorder == "Sleep Apnea"],
        df$stress[df$disorder == "Insomnia"])
-plot_density(df, "stress", "Sleep Apnea", "Insomnia", "Stress Level: Sleep Apnea vs. Insomnia")
+plot_density(df, "stress", "Sleep Apnea", "Insomnia", "Figure2: Stress Level: Sleep Apnea vs. Insomnia")
 t_test_result2
+# p value: 0.5161
+# means: 5.666667  5.870130 
 ```
 
 ```{r}
@@ -30,74 +36,38 @@ t_test_result2
 
 t_test_result3 <- t.test(df$sleep_quality[df$disorder == "None"],
        df$sleep_quality[df$disorder == "Insomnia"])
-plot_density(df, "sleep_quality", "None", "Insomnia", "Sleep Quality: No Disorder vs. Insomnia")
+plot_density(df, "sleep_quality", "None", "Insomnia", "Figure3: Sleep Quality: No Disorder vs. Insomnia")
 t_test_result3
+# p value: 
+# means:
 ```
 
 ```{r}
 # 4. the quality of sleeping with the ppl without sleeping disorder vs the quality of sleeping with the ppl with sleep apnea
 t_test_result4 <- t.test(df$sleep_quality[df$disorder == "None"],
        df$sleep_quality[df$disorder == "Sleep Apnea"])
-plot_density(df, "sleep_quality", "None", "Sleep Apnea", "Sleep Quality: No Disorder vs. Sleep Apnea")
+plot_density(df, "sleep_quality", "None", "Sleep Apnea", "Figure4: Sleep Quality: No Disorder vs. Sleep Apnea")
 t_test_result4
+# p value: 
+# means:
 ```
 
 ```{r}
 # 5. the stress level with the ppl without sleeping disorder vs the stress levelwith the ppl with insomnia 
 t_test_result5 <- t.test(df$stress[df$disorder == "None"],
        df$stress[df$disorder == "Insomnia"])
-plot_density(df, "stress", "None", "Insomnia", "Stress Level: No Disorder vs. Insomnia")
+plot_density(df, "stress", "None", "Insomnia", "Figure5: Stress Level: No Disorder vs. Insomnia")
 t_test_result5
+# p value: 
+# means:
 ```
 
 ```{r}
 # 6. the stress level with the ppl without sleeping disorder vs the stress levelwith the ppl with sleep apnea. 
 t_test_result6 <- t.test(df$stress[df$disorder == "None"],
        df$stress[df$disorder == "Sleep Apnea"])
-plot_density(df, "stress", "None", "Sleep Apnea", "Stress Level: No Disorder vs. Sleep Apnea")
-
-cor.test(df$sleep_quality, df$stress, method = "pearson")
+plot_density(df, "stress", "None", "Sleep Apnea", "Figure6: Stress Level: No Disorder vs. Sleep Apnea")
 t_test_result6
+# p value: 
+# means:
 ```
-
-## stats107_final
-
-
-##How do different sleep disorders (Insomnia vs. Sleep Apnea) differ in sleep quality and stress level?
-
-# 1. Variables:
-
-  - Sleep Disorder: The presence or absence of a sleep disorder in the person (None, Insomnia, Sleep Apnea).
-
-  - Quality of Sleep (Scale: 1-10): A subjective rating of the quality of sleep, ranging from 1 to 10.
-
-  - Stress Level (Scale: 1-10): A subjective rating of the stress level experienced by the person, ranging from 1 to 10.
-
-
-# 2. Hypotheses:
-All the following tests will use a t-test to compare the differences of the two means.
-
-
-  1) Null Hypothesis (H₀₁) : sleep quality of sleep apnea vs sleep quality of insomnia
-  
-      - There is no significant difference in sleep quality between people with Sleep Apnea and those with Insomnia.
-
-  2) Null Hypothesis (H₀₂) : stress level of sleep apnea vs stress level of insomnia
-
-      - There is no significant difference in stress levels between people with Sleep Apnea and those with Insomnia.
-
-  3) Null Hypothesis (H₀₃) : sleep quality of normal people vs sleep quality of insomnia
-
-     - There is no significant difference in sleep quality between people with No Sleep Disorder and those with Insomnia.
-
-  4) Null Hypothesis (H₀₄) : sleep quality of normal people vs sleep quality of sleep apnea
-
-     - There is no significant difference in sleep quality between people with No Sleep Disorder and those with Sleep Apnea.
-
-  5) Null Hypothesis (H₀₅) : stress level of normal people vs stress level of insomnia
-  
-     - There is no significant difference in stress levels between people with No Sleep Disorder and those with Insomnia.
-  
-  6) Null Hypothesis (H₀₆) : stress level of normal people vs stress level of sleep apnea
-  
-     - There is no significant difference in stress levels between people with No Sleep Disorder and those with Sleep Apnea.

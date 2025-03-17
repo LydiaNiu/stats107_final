@@ -1,15 +1,16 @@
 # Define required packages
 required_packages <- c(
-  "tidyverse",  # Collection of packages for data science
-  "readr",      # Read and write CSV files
-  "dplyr",      # Data manipulation
-  "tidyr",      # Data tidying
-  "lubridate",  # Handling date and time data
-  "ggplot2",    # Data visualization
-  "ggpubr",     # Publication-ready plots
-  "rstatix",    # Statistical analysis
-  "rmarkdown",  # Reproducible reporting
-  "knitr"       # Knitting RMarkdown files
+  "tidyverse",  
+  "readr",      # read and write CSV files
+  "dplyr",      
+  "tidyr",      
+  "lubridate",  
+  "ggplot2",    # data visualization
+  "ggpubr",     
+  "rstatix",    
+  "rmarkdown",  
+  "knitr",
+  "gridExtra"   # r markdown format
 )
 
 # Install only missing packages
