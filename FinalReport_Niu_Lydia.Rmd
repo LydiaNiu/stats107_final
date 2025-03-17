@@ -1,9 +1,7 @@
 ---
-title: "FinalReport_Niu_Lydia.Rmd"
-output:
-  pdf_document: default
-  html_document: default
-date: "2025-03-15"
+title: "Final Report"
+output: pdf_document
+date: "2025-03-17"
 ---
 
 ```{r setup, include=FALSE}
@@ -30,10 +28,33 @@ df <- read.csv("cleaned_sleep_health_data.csv")
 - Stress Level (Scale: 1-10): A subjective rating of the stress level experienced by the person, ranging from 1 to 10.
 
 ## VISUALIZATION
-This project uses a **t-test** because it is a statistical method specifically designed to **compare the means of two groups** and determine whether the observed differences are statistically significant. Since our goal is to analyze whether **sleep quality and stress levels differ between individuals with and without sleep disorders (None, Sleep Apnea, Insomnia)**, the t-test is an appropriate choice. It allows us to test the null hypothesis that the means of two groups are equal, while accounting for variability in the data. By using the **p-value and confidence intervals**, we can assess whether the differences we observe are due to chance or represent a meaningful pattern in sleep health.
+
+```{r , echo=FALSE, warning=FALSE}
+# check whether it's normally distributed
+shapiro_sleep <- shapiro.test(df$sleep_quality)
+shapiro_stress <- shapiro.test(df$stress)
+
+# p-value to determine its normality
+if (shapiro_sleep$p.value > 0.05 & shapiro_stress$p.value > 0.05) {
+  # Pearson correlation
+  correlation_test <- cor.test(df$sleep_quality, df$stress, method = "pearson")
+} else {
+  # Spearman correlation
+  correlation_test <- cor.test(df$sleep_quality, df$stress, method = "spearman")
+}
+# Visualization of correlation
+ggscatter(df, x = "stress", y = "sleep_quality",
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = correlation_test$method,
+          xlab = "Stress Level", ylab = "Sleep Quality")
+```
+The p-value is extremely small, meaning the correlation is highly statistically significant. This suggests that the relationship between stress and sleep quality is not due to random chance. The high correlation also being confirmed by the -0.908 rho value and the scatter plot, indicates a strong negative correlation between sleep quality and stress. 
+
+
+This project uses a **t-test** because it is a statistical method specifically designed to **compare the means of two groups**. Since my goal is to analyze whether **sleep quality and stress levels differ between individuals with and without sleep disorders (None, Sleep Apnea, Insomnia)**, the t-test is an appropriate choice. It allows us to test the null hypothesis that the means of two groups are equal, while accounting for variability in the data. By using the **p-value and confidence intervals**, we can assess whether the differences we observe are due to chance or represent a meaningful pattern in sleep health.
 
 ### Density plots for 6 tests:
-\newline
+
 ```{r density_plots_page1, fig.width=25, fig.height=30, echo=FALSE, warning=FALSE, message=FALSE}
 # 1. sleep quality of sleep apnea vs sleep quality of insomnia
 t_test_result1 <- t.test(df$sleep_quality[df$disorder == "Sleep Apnea"],
@@ -75,7 +96,7 @@ grid.arrange(dplot4, dplot5, dplot6, ncol = 1, nrow = 3)
 
 ### Box plots for the 6 testsd
 
-```{r density_plots_page3, fig.width=18, fig.height=25, echo=FALSE, warning=FALSE, message=FALSE}  
+```{r box_plots_page1, fig.width=18, fig.height=30, echo=FALSE, warning=FALSE, message=FALSE}  
 bplot1 <- plot_boxplot(df, "sleep_quality", "disorder", "Sleep Apnea", "Insomnia", "Figure7: Sleep Quality: Sleep Apnea vs. Insomnia")
 bplot2 <- plot_boxplot(df, "stress", "disorder", "Sleep Apnea", "Insomnia", "Figure8: Stress Level: Sleep Apnea vs. Insomnia")
 bplot3 <- plot_boxplot(df, "sleep_quality", "disorder", "None", "Insomnia", "Figure9: Sleep Quality: No Disorder vs. Insomnia")
@@ -83,7 +104,7 @@ bplot3 <- plot_boxplot(df, "sleep_quality", "disorder", "None", "Insomnia", "Fig
 grid.arrange(bplot1, bplot2, bplot3, ncol = 1, nrow = 3)
 ```
 
-```{r density_plots_page4, fig.width=18, fig.height=25, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, fig.width=18, fig.height=25, echo=FALSE, warning=FALSE, message=FALSE}
 bplot4 <- plot_boxplot(df, "sleep_quality", "disorder", "None", "Sleep Apnea", "Figure10: Sleep Quality: No Disorder vs. Sleep Apnea")
 bplot5 <- plot_boxplot(df, "stress", "disorder", "None", "Insomnia", "Figure11: Stress Level: No Disorder vs. Insomnia")
 bplot6 <- plot_boxplot(df, "stress", "disorder", "None", "Sleep Apnea", "Figure12: Stress Level: No Disorder vs. Sleep Apnea")
@@ -93,34 +114,53 @@ grid.arrange(bplot4, bplot5, bplot6, ncol = 1, nrow = 3)
 
 ### Four-quadrant distribution chart
 
-```{r density_plots_page5, fig.width= 25, fig.height=25, echo=FALSE, warning=FALSE, message=FALSE}
-# ggplot(df, aes(x = stress, y = sleep_quality, shape = disorder, color = disorder)) +
-#   geom_point(size = 3, alpha = 0.7) +  # Adjust point size & transparency
-#   geom_hline(yintercept = median(df$sleep_quality, na.rm = TRUE), linetype = "dashed", color = "black") +  # Median line for Quality
-#   geom_vline(xintercept = median(df$stress, na.rm = TRUE), linetype = "dashed", color = "black") +  # Median line for Stress
-#   labs(title = "Four-Quadrant Distribution of Stress & Sleep Quality",
-#        x = "Stress Level",
-#        y = "Sleep Quality",
-#        shape = "Disorder",
-#        color = "Disorder") +
-#   scale_shape_manual(values = c(16, 17, 15)) +  # Different shapes for each disorder
-#   theme_minimal()
+```{r box_plots_page2, fig.width= 25, fig.height=25, echo=FALSE, warning=FALSE, message=FALSE}
+ggplot(df, aes(x = stress, y = sleep_quality, color = disorder, shape = disorder)) +
+  geom_point(size = 10, alpha = 0.8) +
+  geom_vline(xintercept = median(df$stress, na.rm = TRUE), linetype = "dotted", color = "black", size = 1) +
+  geom_hline(yintercept = median(df$sleep_quality, na.rm = TRUE), linetype = "dotted", color = "black", size = 1) +
+  labs(
+    title = "Four-Quadrant Distribution of Stress & Sleep Quality",
+    x = "Stress Level",
+    y = "Sleep Quality",
+    color = "Disorder",
+    shape = "Disorder"  # Merge shape & color legends
+  ) +
+  theme_minimal() +
+  theme(
+    text = element_text(size = 40),
+    legend.text = element_text(size = 35),
+    legend.title = element_text(size = 35),
+    plot.title = element_text(size = 50, face = "bold")
+  ) +
+  guides(color = guide_legend(override.aes = list(size = 8)))  # Adjust legend size
+
 ```
 
-```{r, echo = FALSE}
-tinytex::reinstall_tinytex(repository = "illinois")
-
-```
 
 ## ANALYSIS
-```{r, echo = FALSE}
+### Analyzing the t-tests
+### Analyzing the box plots
+The box plots provide a visual comparison of sleep quality and stress levels across different groups based on sleep disorder status. By examining the distribution of values within each group, we can observe key differences in central tendency and variability.
 
-```
-# Analyzing the Four-quadrant Distribution Chart
 
-Clustering patterns:
-Sleep Apnea (square) tends to be in the upper left quadrant, meaning higher sleep quality and lower stress.
-Insomnia (solid circle) tends to be in the lower right quadrant, meaning higher stress and lower sleep quality.
-Normal individuals (triangle) are scattered but mostly near the center.
+### Analyzing the four-quadrant distribution chart
+The four-quadrant plot visually maps individuals based on their stress levels (x-axis) and sleep quality (y-axis), with each point representing a response and colored according to their sleep disorder category. The median values of sleep quality and stress serve as reference lines, dividing the graph into four quadrants. Median is less sensitive to outliers and skewed data, and it also divides the dataset into two equal halves, making it useful for visualization.
+
+- Top-Left Quadrant (High Sleep Quality, Low Stress):
+
+    This area is predominantly occupied by individuals with **Sleep Apnea**. Their placement suggests that while they experience a diagnosed sleep disorder, their self-reported sleep quality remains relatively high, and their stress levels are relatively low.
+    
+- Bottom-Right Quadrant (Low Sleep Quality, High Stress):
+
+    Individuals with **Insomnia** are concentrated in this quadrant. This indicates that they generally report poorer sleep quality and higher stress, reinforcing previous findings from the box plots.
+  
+- Top-Right Quadrant (High Sleep Quality, High Stress):
+
+    Some individuals, particularly from the **None** group, appear in this section. This suggests that not all individuals without a sleep disorder experience low stress—some may still have high stress despite reporting good sleep quality.
+
+- Bottom-Left Quadrant (Low Sleep Quality, Low Stress): 
+
+  This area contains no responses. This suggests the correlation of sleep quality and stress level is positive, which as the sleep
 
 ## CONCLUSION
