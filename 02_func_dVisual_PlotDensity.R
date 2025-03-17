@@ -16,12 +16,12 @@ plot_density <- function(df, variable, group1, group2, title) {
     ) +
     scale_fill_manual(values = c("blue", "red")) +
     theme_minimal() +
-    theme(
-      text = element_text(size = 25),           # General text size
-      axis.title = element_text(size = 25),     # Axis titles size
-      axis.text = element_text(size = 25),      # Axis values size
-      legend.title = element_text(size = 30),   # Legend title size
-      legend.text = element_text(size = 30),    # Legend labels size
-      plot.title = element_text(size = 40, face = "bold")  # Title size
+    theme(  # increase text size to fit the data visualization in the FINAL REPORT
+      text = element_text(size = 25),          
+      axis.title = element_text(size = 25),    
+      axis.text = element_text(size = 25),     
+      legend.title = element_text(size = 30),  
+      legend.text = element_text(size = 30),   
+      plot.title = element_text(size = 40, face = "bold")  
     )
 }

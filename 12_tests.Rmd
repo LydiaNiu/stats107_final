@@ -1,0 +1,115 @@
+---
+title: "12_DataVisualization.rmd"
+output: html_document
+date: "2025-03-13"
+---
+```{r}
+source("00_requirements.R")
+source("02_func_dVisual_PlotDensity.R")
+df <- read.csv("cleaned_sleep_health_data.csv")
+```
+
+1. test correlation of sleep quality and stress level
+```{r, warning = FALSE}
+# check whether two variables are normally distributed. If yes, use Pearson, if no,  use Spearman’s
+shapiro_sleep <- shapiro.test(df$sleep_quality)
+shapiro_stress <- shapiro.test(df$stress)
+
+# p-value to determine its normality
+if (shapiro_sleep$p.value > 0.05 & shapiro_stress$p.value > 0.05) {
+  # Pearson correlation
+  correlation_test <- cor.test(df$sleep_quality, df$stress, method = "pearson")
+} else {
+  # Spearman correlation
+  correlation_test <- cor.test(df$sleep_quality, df$stress, method = "spearman")
+}
+print(correlation_test)
+
+# Visualization of correlation
+ggscatter(df, x = "stress", y = "sleep_quality",
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = correlation_test$method,
+          xlab = "Stress Level", ylab = "Sleep Quality")
+```
+- P-value: 2.2e-16
+- rho value:  -0.908
+- negative trend line on the scatter plot
+combining the three information, the two variables, sleep quality and stress level, have a high correlation. (more analysis in the final report)
+
+
+
+2. Conduct t-tests on 6 hypothesis. Comparing the difference of two means.
+```{r}
+# 1. sleep quality of sleep apnea vs sleep quality of insomnia
+t_test_result1 <- t.test(df$sleep_quality[df$disorder == "Sleep Apnea"],
+       df$sleep_quality[df$disorder == "Insomnia"])
+plot_density(df,"sleep_quality", "Sleep Apnea", "Insomnia", "Figure1: Sleep Quality: Sleep Apnea vs. Insomnia")
+t_test_result1
+```
+- p value = 0.001583 < 0.05:
+        we reject the null hypothesis, indicating the difference in sleep quality between individuals with Sleep Apnea and Insomnia is statistically significant.
+- means: 7.205128(Sleep Apnea) vs 6.532468(Insomnia):
+        Individuals with Sleep Apnea tend to report better sleep quality than those with Insomnia.
+- 95 percent confidence interval: 0.2610652 1.0842562:
+        The range does not contain 0, further confirming that the difference in means is statistically significant.
+
+```{r}
+# 2. the stress level with the ppl with sleep apnea vs thestress level with the ppl with insomnia \
+t_test_result2 <- t.test(df$stress[df$disorder == "Sleep Apnea"],
+       df$stress[df$disorder == "Insomnia"])
+plot_density(df, "stress", "Sleep Apnea", "Insomnia", "Figure2: Stress Level: Sleep Apnea vs. Insomnia")
+t_test_result2
+
+```
+- p-value = 0.5161 > 0.05:
+        We fail to reject the null hypothesis, indicating that the difference in stress levels between individuals with Sleep Apnea and Insomnia is not statistically significant.
+- Means: 5.666667 (Sleep Apnea) vs. 5.870130 (Insomnia):
+        The average stress levels for both groups are very close, suggesting no significant difference in stress between these two sleep disorders.
+- 95 percent confidence interval: (-0.8216114, 0.4146850):
+        The interval contains 0, confirming that the difference in means is not statistically significant.
+
+```{r}
+# 3. the quality of sleeping with the ppl without sleeping disorder vs the quality of sleeping with the ppl with insomnia 
+
+t_test_result3 <- t.test(df$sleep_quality[df$disorder == "None"],
+       df$sleep_quality[df$disorder == "Insomnia"])
+plot_density(df, "sleep_quality", "None", "Insomnia", "Figure3: Sleep Quality: No Disorder vs. Insomnia")
+t_test_result3
+```
+
+
+```{r}
+# 4. the quality of sleeping with the ppl without sleeping disorder vs the quality of sleeping with the ppl with sleep apnea
+t_test_result4 <- t.test(df$sleep_quality[df$disorder == "None"],
+       df$sleep_quality[df$disorder == "Sleep Apnea"])
+plot_density(df, "sleep_quality", "None", "Sleep Apnea", "Figure4: Sleep Quality: No Disorder vs. Sleep Apnea")
+t_test_result4
+# p value: 0.03601
+# means: 7.625571  7.205128
+# 95 percent confidence interval: 0.02801647 0.81286868
+```
+```{r}
+# 5. the stress level with the ppl without sleeping disorder vs the stress levelwith the ppl with insomnia 
+t_test_result5 <- t.test(df$stress[df$disorder == "None"],
+       df$stress[df$disorder == "Insomnia"])
+plot_density(df, "stress", "None", "Insomnia", "Figure5: Stress Level: No Disorder vs. Insomnia")
+t_test_result5
+```
+p value: 0.0002053
+means: 5.114155  5.870130
+95 percent confidence interval: -1.1481604 -0.3637889
+
+analysis:
+
+```{r}
+# 6. the stress level with the ppl without sleeping disorder vs the stress levelwith the ppl with sleep apnea. 
+t_test_result6 <- t.test(df$stress[df$disorder == "None"],
+       df$stress[df$disorder == "Sleep Apnea"])
+plot_density(df, "stress", "None", "Sleep Apnea", "Figure6: Stress Level: No Disorder vs. Sleep Apnea")
+t_test_result6
+```
+p value: 0.0555
+means: 5.114155  5.666667
+95 percent confidence interval: -1.11825552  0.01323269
+
+analysis:

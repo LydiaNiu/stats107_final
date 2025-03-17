@@ -6,8 +6,7 @@ required_packages <- c(
   "tidyr",      
   "lubridate",  
   "ggplot2",    # data visualization
-  "ggpubr",     
-  "rstatix",    
+  "ggpubr",     # correlation
   "rmarkdown",  
   "knitr",
   "gridExtra"   # r markdown format
