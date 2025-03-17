@@ -48,8 +48,9 @@ ggscatter(df, x = "stress", y = "sleep_quality",
           cor.coef = TRUE, cor.method = correlation_test$method,
           xlab = "Stress Level", ylab = "Sleep Quality")
 ```
+- P-value: 2.2e-16
+- rho value:  -0.908
 The p-value is extremely small, meaning the correlation is highly statistically significant. This suggests that the relationship between stress and sleep quality is not due to random chance. The high correlation also being confirmed by the -0.908 rho value and the scatter plot, indicates a strong negative correlation between sleep quality and stress. 
-
 
 This project uses a **t-test** because it is a statistical method specifically designed to **compare the means of two groups**. Since my goal is to analyze whether **sleep quality and stress levels differ between individuals with and without sleep disorders (None, Sleep Apnea, Insomnia)**, the t-test is an appropriate choice. It allows us to test the null hypothesis that the means of two groups are equal, while accounting for variability in the data. By using the **p-value and confidence intervals**, we can assess whether the differences we observe are due to chance or represent a meaningful pattern in sleep health.
 
