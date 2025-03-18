@@ -45,4 +45,3 @@ This repository contains files to reproduce the step-by-step analysis of **stres
 - If only **statistical tests** are needed, run `12_tests.Rmd`.  
 - If the data needs to be **reprocessed**, rerun `11_DataCleaning.Rmd`.  
 
-This ensures that all analyses and visualizations can be recreated from the raw data.
