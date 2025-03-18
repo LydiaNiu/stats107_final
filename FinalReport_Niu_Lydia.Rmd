@@ -1,35 +1,71 @@
 ---
-title: "Final Report"
+title: "Analyzing the Relationship Between Stress, Sleep Quality, and Sleep Disorders"
+arthur: "Lydia Niu"
 output: pdf_document
 date: "2025-03-17"
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 source("00_requirements.R")
 source("01_func_DataCleaning.R")
 source("02_func_dVisual_PlotDensity.R")
 source("03_func_dVisual_BoxPlot.R")
-source("04_func_dVisual_BarChart.R")
 df <- read.csv("cleaned_sleep_health_data.csv")
 ```
 
-# I am the title
+# ABSTRACT
+This study examines the relationship between stress levels, sleep quality, and sleep disorders (Insomnia, Sleep Apnea, and No Disorder) through statistical analysis. We explore whether stress and sleep quality differ across groups and influence disorder likelihood.
 
-## ABSTRACT
+Through correlation analysis, t-tests, density plots, box plots, and four-quadrant distribution plots, we found a strong negative correlation between stress and sleep quality. However, t-tests showed that stress levels between the groupd of sleep apnea patients and those without a disorder, and the group of sleep apnea patients and insomnia patients were not significantly different, indicating both people without sleep disorder and insomnia could possibly get sleep apnea. Additionally, sleep apnea patients exhibited the highest variability in both stress and sleep quality, suggesting diverse experiences within this group. In contrast, insomnia patients had more clustered stress and sleep quality levels, highlighting a more consistent pattern.
 
-## INTRODUCTION
+These findings indicate that **sleep apnea cannot be directly attributed to a single factor**, as the variability in **sleep quality and stress levels** is too broad. To accurately predict whether an individual is at risk for sleep apnea, **further research incorporating additional variables** such as **age, gender, and sleep duration** is essential.  In addition, the individuals without a diagnosed sleep disorder but experiencing high stress and poor sleep quality should be cautious, as their patterns resemble those with insomnia.
 
-## DATA
+Overall, these results highlight the need for **a more comprehensive predictive model** that considers multiple factors to improve early detection and targeted interventions for sleep disorders.
 
-### variables: 
-- Sleep Disorder: The presence or absence of a sleep disorder in the person (None, Insomnia, Sleep Apnea).
-- Quality of Sleep (Scale: 1-10): A subjective rating of the quality of sleep, ranging from 1 to 10.
-- Stress Level (Scale: 1-10): A subjective rating of the stress level experienced by the person, ranging from 1 to 10.
 
-## VISUALIZATION
+# INTRODUCTION
 
-```{r , echo=FALSE, warning=FALSE}
+## 6 Hypotheses:
+
+  1) Null Hypothesis (H01) :
+  
+      - There is no significant difference in sleep quality between people with Sleep Apnea and those with Insomnia.
+
+  2) Null Hypothesis (H02) :
+
+      - There is no significant difference in stress levels between people with Sleep Apnea and those with Insomnia.
+
+  3) Null Hypothesis (H03) : 
+
+     - There is no significant difference in sleep quality between people with No Sleep Disorder and those with Insomnia.
+
+  4) Null Hypothesis (H04) : 
+
+     - There is no significant difference in sleep quality between people with No Sleep Disorder and those with Sleep Apnea.
+
+  5) Null Hypothesis (H05) :
+  
+     - There is no significant difference in stress levels between people with No Sleep Disorder and those with Insomnia.
+  
+  6) Null Hypothesis (H06) :
+  
+     - There is no significant difference in stress levels between people with No Sleep Disorder and those with Sleep Apnea.
+
+
+# DATA
+The dataset used for this analysis was retrieved from Kaggle, and the key variables that are being used are described below. 
+The dataset contains **no missing values (no NA or empty strings)**, therefore, during the data cleaning process, the only modification made was converting character variables into factor data types for proper categorical analysis. 
+This dataset is based on real responses and **will not be generated through a randomized simulation**.
+
+- sleep disorder: The presence or absence of a sleep disorder in the person (None, Insomnia, Sleep Apnea)
+- sleep quality: A subjective rating of the quality of sleep (rated on a scale of 1-10)
+- stress level: A subjective rating of the stress level experienced by the person (rated on a scale of 1-10)
+
+# VISUALIZATION
+
+## Testing correlation of sleep quality and stress level
+The correlation test was performed to determine whether stress level and sleep quality are statistically related and if their relationship is due to random variation or a meaningful pattern in the data.
+```{r , echo=FALSE, fig.width=9, fig.height=4, warning=FALSE}
 # check whether it's normally distributed
 shapiro_sleep <- shapiro.test(df$sleep_quality)
 shapiro_stress <- shapiro.test(df$stress)
@@ -48,13 +84,13 @@ ggscatter(df, x = "stress", y = "sleep_quality",
           cor.coef = TRUE, cor.method = correlation_test$method,
           xlab = "Stress Level", ylab = "Sleep Quality")
 ```
-- P-value: 2.2e-16
-- rho value:  -0.908
-The p-value is extremely small, meaning the correlation is highly statistically significant. This suggests that the relationship between stress and sleep quality is not due to random chance. The high correlation also being confirmed by the -0.908 rho value and the scatter plot, indicates a strong negative correlation between sleep quality and stress. 
+The **p-value (2.2e-16)** is extremely small, indicating a highly statistically significant correlation. This suggests that the relationship between stress level and sleep quality is unlikely to be due to chance. The negative trend in the scatter plot further confirms a strong negative correlation, meaning that as stress increases, sleep quality tends to decrease.
 
-This project uses a **t-test** because it is a statistical method specifically designed to **compare the means of two groups**. Since my goal is to analyze whether **sleep quality and stress levels differ between individuals with and without sleep disorders (None, Sleep Apnea, Insomnia)**, the t-test is an appropriate choice. It allows us to test the null hypothesis that the means of two groups are equal, while accounting for variability in the data. By using the **p-value and confidence intervals**, we can assess whether the differences we observe are due to chance or represent a meaningful pattern in sleep health.
+After confirming the correlation between sleep quality and stress, we can apply the **t-test** to compare group means and determine whether sleep quality and stress levels differ across sleep disorders. We can further use the **p-value and confidence intervals** to assess whether observed differences are statistically significant or due to chance.
 
-### Density plots for 6 tests:
+In order to visualize the **difference in means** between groups, we plot density plots. This helps in understanding how the data is spread and whether the groups have distinct or overlapping distributions.
+
+## Density plots for 6 tests:
 
 ```{r density_plots_page1, fig.width=25, fig.height=30, echo=FALSE, warning=FALSE, message=FALSE}
 # 1. sleep quality of sleep apnea vs sleep quality of insomnia
@@ -95,29 +131,28 @@ grid.arrange(dplot4, dplot5, dplot6, ncol = 1, nrow = 3)
 
 ```
 
-### Box plots for the 6 testsd
+After the **t-test** and density plots, we use **box plots** to analyze **medians, interquartile ranges, and outliers**. Unlike means, which can be influenced by extremes, medians offer a more **stable measure of central tendency**. Box plots help assess **variability within groups** and determine if differences in means are also reflected in **median sleep quality and stress levels**.
 
-```{r box_plots_page1, fig.width=18, fig.height=30, echo=FALSE, warning=FALSE, message=FALSE}  
-bplot1 <- plot_boxplot(df, "sleep_quality", "disorder", "Sleep Apnea", "Insomnia", "Figure7: Sleep Quality: Sleep Apnea vs. Insomnia")
-bplot2 <- plot_boxplot(df, "stress", "disorder", "Sleep Apnea", "Insomnia", "Figure8: Stress Level: Sleep Apnea vs. Insomnia")
-bplot3 <- plot_boxplot(df, "sleep_quality", "disorder", "None", "Insomnia", "Figure9: Sleep Quality: No Disorder vs. Insomnia")
+### Box plots for the sleep quality/stress level of all three groups based on disorder
 
-grid.arrange(bplot1, bplot2, bplot3, ncol = 1, nrow = 3)
+```{r box_plots_page1, echo=FALSE, warning=FALSE, message=FALSE}  
+# fig.width=18, fig.height=30, 
+# Plot sleep quality for all three groups
+plot_boxplot(df, "sleep_quality", "Figure7: Sleep Quality Across Sleep Disorders")
+
+# Plot stress level for all three groups
+plot_boxplot(df, "stress", "Figure8: Stress Levels Across Sleep Disorders")
 ```
 
 ```{r, fig.width=18, fig.height=25, echo=FALSE, warning=FALSE, message=FALSE}
-bplot4 <- plot_boxplot(df, "sleep_quality", "disorder", "None", "Sleep Apnea", "Figure10: Sleep Quality: No Disorder vs. Sleep Apnea")
-bplot5 <- plot_boxplot(df, "stress", "disorder", "None", "Insomnia", "Figure11: Stress Level: No Disorder vs. Insomnia")
-bplot6 <- plot_boxplot(df, "stress", "disorder", "None", "Sleep Apnea", "Figure12: Stress Level: No Disorder vs. Sleep Apnea")
-grid.arrange(bplot4, bplot5, bplot6, ncol = 1, nrow = 3)
 ```
 
 
 ### Four-quadrant distribution chart
 
-```{r box_plots_page2, fig.width= 25, fig.height=25, echo=FALSE, warning=FALSE, message=FALSE}
+```{r box_plots_page2, fig.width= 25, fig.height=15, echo=FALSE, warning=FALSE, message=FALSE}
 ggplot(df, aes(x = stress, y = sleep_quality, color = disorder, shape = disorder)) +
-  geom_point(size = 10, alpha = 0.8) +
+  geom_point(size = 15, alpha = 0.8) +
   geom_vline(xintercept = median(df$stress, na.rm = TRUE), linetype = "dotted", color = "black", size = 1) +
   geom_hline(yintercept = median(df$sleep_quality, na.rm = TRUE), linetype = "dotted", color = "black", size = 1) +
   labs(
@@ -139,13 +174,103 @@ ggplot(df, aes(x = stress, y = sleep_quality, color = disorder, shape = disorder
 ```
 
 
-## ANALYSIS
-### Analyzing the t-tests
-### Analyzing the box plots
-The box plots provide a visual comparison of sleep quality and stress levels across different groups based on sleep disorder status. By examining the distribution of values within each group, we can observe key differences in central tendency and variability.
+# ANALYSIS
+# t-tests analysis
+In the t-tests, we evaluate the difference between the two means and analyze the p-value to test the hypothesis. If the null hypothesis is rejected, it indicates a **statistically significant difference** between the two groups. Conversely, if we fail to reject the null hypothesis, it suggests that **no statistically significant difference** exists between the groups.
+
+**Means of sleep quality in three groups: None: 7.626 > Sleep Apnea: 7.205 > Insomnia: 6.532**
+
+Individuals with insomnia reported the lowest average sleep quality (6.532), followed by those with sleep apnea (7.205), and individuals with no sleep disorder reported the highest (7.626).
+
+**Means of stress level in three groups: Insomnia: 5.87 > Sleep Apnea: 5.667 > None: 5.114**
+
+The stress levels among groups were more similar, with individuals having insomnia showing the highest average stress (5.87), followed by those with sleep apnea (5.667), and those without a disorder reporting the lowest (5.114).
+
+### The hypothesis that we successfully reject: H01, H03, H04, H05
+
++ H01: There *is* significant difference in sleep quality between people with Sleep Apnea and those with Insomnia.
+  - **p value = 0.001583 < 0.05:**
+        we reject the null hypothesis, indicating the difference in sleep quality between individuals with Sleep Apnea and Insomnia is statistically significant.
+  - **95 percent confidence interval: 0.2610652 1.0842562:**
+        The range does not contain 0, further confirming that the difference in means is statistically significant.
+
++ H03: There *is* significant difference in sleep quality between people with No Sleep Disorder and those with Insomnia.
+  - **p-value < 2.2e-16:**
+        We reject the null hypothesis, indicating a significant difference in sleep quality between individuals with no sleep disorder and those with Insomnia.
+  - **95% Confidence Interval: (0.8701568, 1.3160497):**
+The interval does not contain 0, further confirming the significant difference.
+
++ H04: There *is* significant difference in sleep quality between people with No Sleep Disorder and those with Sleep Apnea.
+  - **p-value = 0.03601 < 0.05:**
+        We reject the null hypothesis, indicating that the difference in sleep quality between individuals with no disorder and those with Sleep Apnea is statistically significant.
+  - **95% Confidence Interval: (0.02801647, 0.81286868):**
+        The interval does not contain 0, confirming the statistical significance of the difference.
+        
++ H05: There *is* significant difference in stress levels between people with No Sleep Disorder and those with Insomnia.
+  - **p-value = 0.0002053 < 0.05:**
+        We reject the null hypothesis, indicating a significant difference in stress levels between individuals with no sleep disorder and those with Insomnia.
+  - **95% Confidence Interval: (-1.1481604, -0.3637889):**
+        The confidence interval does not contain 0, confirming the statistical significance of the difference.
+        
+### The hypothesis that we fail to reject: H02, H06
+
++ H02: There *is no* significant difference in stress levels between people with Sleep Apnea and those with Insomnia.
+  - **p-value = 0.5161 > 0.05:**
+        We fail to reject the null hypothesis, indicating that the difference in stress levels between individuals with Sleep Apnea and Insomnia is not statistically significant.
+  - **95 percent confidence interval: (-0.8216114, 0.4146850):**
+        The interval contains 0, confirming that the difference in means is not statistically significant.
+
++ H06: There *is no* significant difference in stress levels between people with No Sleep Disorder and those with Sleep Apnea.
+  - **p-value = 0.0555 > 0.05:**
+        We fail to reject the null hypothesis, suggesting that there is no statistically significant difference in stress levels between individuals with no sleep disorder and those with Sleep Apnea.
+  - **95% Confidence Interval: (-1.11825552, 0.01323269):**
+        Since the confidence interval contains 0, it confirms the lack of statistical significance.
+        
+Referring to **Figures 2 and 6**, which correspond to the density plots for **Hypotheses 2 and 6**, these are the only cases where the distributions exhibit little overlapping area. The two groups have distinctly separated peaks, indicating a clear distinction in their distributions. In contrast, the remaining density plots show significant overlapping areas, suggesting that the distributions of the two groups are more similar.
+
+These results suggest that *sleep quality is significantly affected by sleep disorders*, with insomnia leading to the lowest sleep quality. In the other hand, *stress levels do not significantly differ between the group of sleep apnea vs insomnia, and the group of no disorder vs sleep apnea*, indicating that both conditions may contribute similarly to stress. 
+
+# Box Plots Analysis
+
+### **1) Sleep Quality Across Sleep Disorders**
+1. **Individuals with Sleep Apnea Show High Variability in Sleep Quality**  
+   - The *interquartile range (IQR)* for sleep apnea is the widest, indicating a *large spread* in reported sleep quality.  
+   - Some individuals with sleep apnea experience high sleep quality similar to those without sleep disorders, while others report significantly lower sleep quality.  
+   
+2. **Insomnia Patients Report the Lowest Sleep Quality**  
+   - The *median sleep quality* for insomnia is the lowest among all three groups.  
+   - The *IQR is relatively small*, showing *less variation* in sleep quality among insomnia patients.  
+   - Outliers in the insomnia group suggest that a few individuals report unusually high sleep quality compared to the rest.  
+
+3. **Individuals Without Sleep Disorders Have the Most Consistent Sleep Quality**  
+   - The *median sleep quality is the highest*, and the *IQR is narrow*, indicating *low variability* in responses.  
+   - This suggests that people without sleep disorders generally have *more stable and higher-quality sleep* compared to the other two groups.  
+
+### **2) Stress Levels Across Sleep Disorders**
+1. **Sleep Apnea Patients Experience a Wide Range of Stress Levels**  
+   - The *IQR for sleep apnea is the largest*, meaning that *some individuals with sleep apnea experience extreme stress while others report low stress levels*.  
+   - The median stress level is *higher than individuals without sleep disorders* but *lower than those with insomnia*.  
+
+2. **Insomnia Patients Have the Highest Median Stress Level**  
+   - The *median stress level is the highest among the three groups*, reinforcing the connection between *insomnia and high stress*.  
+   - There is *less variability* in the stress levels of insomnia patients compared to those with sleep apnea, but the *spread is still significant*.  
+
+3. **Individuals Without Sleep Disorders Have the Lowest and Most Consistent Stress Levels**  
+   - The *IQR is narrow*, meaning that most individuals without sleep disorders *experience low and stable stress levels*.  
+   - This reinforces the expected pattern that *good sleep quality is associated with lower stress*.  
 
 
-### Analyzing the four-quadrant distribution chart
+### **3) Interesting Findings**  
+From the t-test results, we found that *stress level is not statistically significant* in affecting an individual's sleep quality or sleep disorder. However, the box plots reveal a clear pattern: Figure 8 shows that the median stress levels for both the insomnia and sleep apnea groups are high and nearly identical, around 7, while the median stress level for individuals without a sleep disorder is significantly lower at 5. This suggests that while stress may not directly determine sleep quality in a statistically significant way, individuals with sleep disorders tend to experience higher stress levels compared to those without sleep disorders.
+
+### **4) Concluded Analysis for All Patterns**  
+The box plots reveal consistent trends across different sleep disorder groups. 
+**Individuals with *Insomnia* report the lowest sleep quality and the highest stress levels**, with less variability in their responses. In contrast, those without sleep disorders show higher sleep quality and lower stress, with greater consistency. Especially the **sleep apnea group**, displaying the highest variation among three groupd in both sleep quality and stress levels. 
+
+These findings suggest that while **insomnia has the most pronounced negative effects on sleep quality and stress**, sleep apnea also contributes to fluctuations in both variables, albeit with greater individual differences.
+
+## Four-Quadrant Distribution Chart Analysis
+
 The four-quadrant plot visually maps individuals based on their stress levels (x-axis) and sleep quality (y-axis), with each point representing a response and colored according to their sleep disorder category. The median values of sleep quality and stress serve as reference lines, dividing the graph into four quadrants. Median is less sensitive to outliers and skewed data, and it also divides the dataset into two equal halves, making it useful for visualization.
 
 - Top-Left Quadrant (High Sleep Quality, Low Stress):
@@ -164,4 +289,15 @@ The four-quadrant plot visually maps individuals based on their stress levels (x
 
   This area contains no responses. This suggests the correlation of sleep quality and stress level is positive, which as the sleep
 
-## CONCLUSION
+# CONCLUSION
+
+Through a series of statistical analyses, including **correlation tests, t-tests, box plots, and the four-quadrant plot**, we have gained valuable insights into the relationship between **sleep quality, stress levels, and sleep disorders**. The findings reveal that **sleep apnea patients exhibit the most variability in both sleep quality and stress levels**, suggesting that **no single factor can reliably predict the condition**. 
+To accurately predict the likelihood of an individual without a diagnosed sleep disorder developing sleep apnea, further research incorporating additional variables—such as age, gender, and sleep duration—is necessary. In contrast, **individuals with insomnia tend to have more clustered and consistent sleep quality and stress levels**, indicating a more predictable pattern.
+
+The **correlation test confirmed a strong negative relationship between stress and sleep quality**, reinforcing the idea that higher stress is associated with lower sleep quality. However, **t-tests showed that stress levels alone are not a statistically significant factor in distinguishing sleep apnea from either insomnia or individuals without a sleep disorder**. 
+This suggests that **stress alone is not a sufficient predictor of sleep apnea** and that additional **physical and physiological factors** should be considered for a more comprehensive analysis, such as age, gender, sleep duration.
+
+
+The **four-quadrant plot highlights that individuals without a sleep disorder are spread across different stress and sleep quality levels**, but more clustered along the x-axis. This disrtibution suggests that **even those with good sleep quality or low stress are still at risk of developing sleep apnea** since the variability of sleep apnea is broad. This reinforces the idea that **predicting sleep apnea requires a broader analysis beyond subjective measures of stress and sleep quality**.
+
+From a **public health perspective**, individuals without being diagnosed with sleep disorder but experiencing **high stress and poor sleep quality should be cautious**, as the t-tests indicate that their stress levels are not significantly different from those with sleep apnea. Additionally, individuals with sleep apnea should be aware of the potential risk of developing insomnia, as their stress levels also show no significant difference from those with insomnia. Future research should incorporate **additional physical health indicators**, such as age, gender, and sleep duration, to enhance predictive accuracy for sleep apnea and ensure that individuals at risk receive appropriate intervention and support.
