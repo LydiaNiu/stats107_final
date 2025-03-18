@@ -1,17 +1,26 @@
-plot_boxplot <- function(df, variable, group, group1, group2, title) {
-  df_filtered <- df %>% filter(!!sym(group) %in% c(group1, group2))  # Filter to only the two groups
+# function that creates box plot, which takes in the df as the dataset, 
+# variable as the sleep quality/stress level, title as the title of the plot
+plot_boxplot <- function(df, variable, title) {
   
-  ggplot(df_filtered, aes_string(x = group, y = variable, fill = group)) +
-    geom_boxplot(outlier.shape = NA, fatten = 2, color = "black", lwd = 1) +
-    labs(title = title, x = group, y = variable) +
-    theme_minimal() +
-    theme(legend.position = "right") +
-    theme(
-      text = element_text(size = 25),           # General text size
-      axis.title = element_text(size = 25),     # Axis titles size
-      axis.text = element_text(size = 25),      # Axis values size
-      legend.title = element_text(size = 30),   # Legend title size
-      legend.text = element_text(size = 30),    # Legend labels size
-      plot.title = element_text(size = 40, face = "bold")  # Title size
-    )
+  set.seed(123)
+  
+  # Define Colors
+  color_map <- c("Sleep Apnea" = "red", "Insomnia" = "blue", "None" = "yellow")
+  
+  # Convert disorder to a factor and ensure correct order
+  df$disorder <- factor(df$disorder, levels = c("None", "Sleep Apnea", "Insomnia"))
+  
+  # Create Boxplot with Correct Colors
+  boxplot(df[[variable]] ~ df$disorder,   
+          col = color_map[levels(df$disorder)],  # Use the levels of the factor for correct mapping
+          border = "black",        # Box border color
+          main = title,
+          xlab = "Disorder",
+          ylab = variable,
+          cex.axis = 1, cex.lab = 1, cex.main = 1, # Increase font size
+          lwd = 2)                 # Make box borders thicker
+  
+  # Add thick purple median line to make it eye catching since some boxes have no outliers
+  medians <- tapply(df[[variable]], df$disorder, median)
+  segments(1:length(medians) - 0.3, medians, 1:length(medians) + 0.3, medians, col = "purple", lwd = 4)
 }
